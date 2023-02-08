@@ -1,7 +1,7 @@
 import speech_recognition as sr
 import yfinance as yf
 import pyttsx3, pywhatkit, pyjokes, webbrowser, wikipedia
-import datetime
+import datetime, os
 
 #? Utilidades
 def ver_voces():
@@ -80,16 +80,62 @@ def pedidos():
 
     if 'qué hora es' in pedido:
       hora()
-    elif 'qué dia es' in pedido:
+
+    elif 'qué día es' in pedido:
       dia()
-    elif 'apaga te' in pedido:
-      hablar('Fué un placer atenderte')
-      break
+
     elif 'abre youtube' in pedido:
       hablar('Abriendo YouTube')
       webbrowser.open('https://www.youtube.com')
+
     elif 'abre el navegador' in pedido:
       hablar('Abriendo el navegador')
       webbrowser.open('https://www.google.com')
 
+    elif 'busca en wikipedia' in pedido:
+      hablar(f'Buscando {pedido.replace("busca en wikipedia", "")} en Wikipedia')
+      pedido = pedido.replace('busca en wikipedia', '')
+      wikipedia.set_lang('es')
+      try:
+        result = wikipedia.summary(pedido, sentences=1)
+        hablar('Encontré lo siguiente:')
+        print(result)
+        hablar(result)
+      except:
+        hablar('No encontré lo que buscabas')
+
+    elif 'busca en internet' in pedido:
+      hablar(f'Buscando {pedido.replace("busca en internet", "")} en internet')
+      pywhatkit.search(pedido.replace("busca en internet", ""))
+      hablar('Esto es lo que he encontrado:')
+    
+    elif 'reproduce en youtube' in pedido:
+      hablar(f'Reproduciendo {pedido.replace("reproduce en youtube", "")}')
+      pywhatkit.playonyt(pedido.replace("reproducir", ""))
+
+    elif 'dime un chiste' in pedido:
+      hablar(pyjokes.get_joke(language='es'))
+    
+    elif 'precio de las acciones' in pedido:
+      accion = pedido.split('de')[-1].strip()
+      wallet = {
+        'apple':'APPL',
+        'amazon':'AMZN',
+        'google':'GOOGL',
+        'tesla':'TSLA'
+      }
+      try:
+        accion_buscada = wallet[accion]
+        accion_buscada = yf.Ticker(accion_buscada)
+        precio_actual = accion_buscada.info['regularMarketPrice']
+        hablar(f'El precio de las acciones de {accion} es de {precio_actual}')
+      except:
+        hablar('No la he encontrado')
+      
+    elif 'adiós' in pedido:
+      hablar(f'Fué un placer atenderte, que tengas {"un buen día" if datetime.datetime.now().hour < 18 else "una buena noche"}')
+      break
+
+
 pedidos()
+os.system('cls')

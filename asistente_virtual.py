@@ -39,14 +39,22 @@ voces = {
 #! Texto a voz
 def hablar(mensaje):
   engine = pyttsx3.init()
-  # engine.setProperty('voice', voces['sabina'])
-  # engine.setProperty('voice', voces['david'])
-  engine.setProperty('voice', voces['zira'])
+  engine.setProperty('voice', voces['sabina'])
   engine.say(mensaje)
   engine.runAndWait()
 
-hablar('Buenas noches, Jhojan')
+# hablar('Buenas noches, Jhojan')
 
 # engine = pyttsx3.init()
 # for voz in engine.getProperty('voices'):
 #   print(voz)
+
+#! Informar dia
+def dia():
+  dia = datetime.date.today()
+  dia_semana = dia.weekday()
+  calendario = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+  
+  hablar(f'Hoy es {calendario[dia_semana]}')
+
+dia()

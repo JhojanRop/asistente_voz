@@ -43,8 +43,6 @@ def hablar(mensaje):
   engine.say(mensaje)
   engine.runAndWait()
 
-# hablar('Buenas noches, Jhojan')
-
 # engine = pyttsx3.init()
 # for voz in engine.getProperty('voices'):
 #   print(voz)
@@ -56,5 +54,13 @@ def dia():
   calendario = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
   
   hablar(f'Hoy es {calendario[dia_semana]}')
+# dia()
 
-dia()
+#! Informar hora
+def hora():
+  hora = datetime.datetime.now()
+  print(hora)
+
+  hora = f'En este momento son las {hora.hour if hora.hour <= 12 else (hora.hour-12)} y {hora.minute} de {"la noche" if hora.hour >= 18 else ("la mañana" if hora.hour < 12 else ("el medio día" if hora.hour in range(12,13) else ()))}'
+  hablar(hora)
+hora()

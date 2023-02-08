@@ -27,4 +27,11 @@ def transformar_audio():
       print('--- Unknown Error ---\nError desconocido')
       return 'Error'
 
-transformar_audio()
+
+#! Voz asistente
+def hablar(mensaje):
+  engine = pyttsx3.init()
+  engine.say(mensaje)
+  engine.runAndWait()
+
+hablar('Hola mundo')

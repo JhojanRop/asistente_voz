@@ -27,11 +27,26 @@ def transformar_audio():
       print('--- Unknown Error ---\nError desconocido')
       return 'Error'
 
+#! Voces
+voces = {
+  'sabina':'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_ES-MX_SABINA_11.0',
 
-#! Voz asistente
+  'zira':'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0',
+
+  'david':'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0'
+}
+
+#! Texto a voz
 def hablar(mensaje):
   engine = pyttsx3.init()
+  # engine.setProperty('voice', voces['sabina'])
+  # engine.setProperty('voice', voces['david'])
+  engine.setProperty('voice', voces['zira'])
   engine.say(mensaje)
   engine.runAndWait()
 
-hablar('Hola mundo')
+hablar('Buenas noches, Jhojan')
+
+# engine = pyttsx3.init()
+# for voz in engine.getProperty('voices'):
+#   print(voz)
